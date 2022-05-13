@@ -52,11 +52,40 @@ class Overworld extends Phaser.Scene {
 
         this.physics.world.on('worldbounds', (body, blockedUp, blockedDown, blockedLeft, blockedRight) => {
             if (blockedUp) {
+                this.cameras.main.flash(250);
+                this.cameras.main.shake(250);
+
                 this.cameras.main.pan(
                     this.ROOMWIDTH*1.5,
                     this.ROOMHEIGHT*0.5,
                     3000,
-                    'Linear'
+                    'Sine.easeOut'
+                );
+                this.physics.world.setBounds(this.ROOMWIDTH, 0, this.ROOMWIDTH, this.ROOMHEIGHT);
+                this.player.body.reset(this.player.body.x+this.player.body.halfWidth, this.player.body.y);
+            }
+            else if (blockedLeft) {
+                this.cameras.main.flash(250);
+                this.cameras.main.shake(250);
+
+                this.cameras.main.pan(
+                    this.ROOMWIDTH*0.5,
+                    this.ROOMHEIGHT*1.5,
+                    3000,
+                    'Sine.easeOut'
+                );
+                this.physics.world.setBounds(0, this.ROOMHEIGHT, this.ROOMWIDTH, this.ROOMHEIGHT);
+                this.player.body.reset(-this.player.body.x-this.player.body.halfWidth, this.player.body.y);
+            }
+            else if (blockedRight) {
+                this.cameras.main.flash(250);
+                this.cameras.main.shake(250);
+
+                this.cameras.main.pan(
+                    this.ROOMWIDTH*0.5,
+                    this.ROOMHEIGHT*1.5,
+                    3000,
+                    'Sine.easeOut'
                 );
                 this.physics.world.setBounds(this.ROOMWIDTH, 0, this.ROOMWIDTH, this.ROOMHEIGHT);
                 this.player.body.reset(this.player.body.x+this.player.body.halfWidth, this.player.body.y - 1);
